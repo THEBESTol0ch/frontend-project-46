@@ -1,12 +1,8 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "type": "module",
   "description": "[![Actions Status](https://github.com/THEBESTol0ch/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/THEBESTol0ch/frontend-project-46/actions)",
   "main": "index.js",
-  "scripts": {
-    "test": "npx jest"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/THEBESTol0ch/frontend-project-46.git"
@@ -24,5 +20,8 @@
   "devDependencies": {
     "eslint": "^8.38.0",
     "jest": "^29.5.0"
+  },
+  "scripts": {
+    "test": "jest"
   }
 }

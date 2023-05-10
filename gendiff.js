@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { program } from 'commander';
-import { gendiff } from './src/gendiff.js';
+const { program } = require("commander");
+const gendiff = require("./src/gendiff.js");
 
 program
 	.usage('[options] <filepath1> <filepath2>')
@@ -11,4 +11,4 @@ program
 	.option('-f, --format <type>', 'output format')
 	.parse(process.argv);
 
-gendiff();
+gendiff(process.argv.slice(2));

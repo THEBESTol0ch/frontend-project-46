@@ -1,26 +1,31 @@
-import { gendiff } from '../src/gendiff.js';
+const gendiff = require("../src/gendiff.js");
 
 describe('gendiff', () => {
-  it('should compare two JSON files and output the differences', () => {
-    const path1 = './file1.json';
-    const path2 = './file2.json';
-
+  it('should output correct difference between two JSON files', () => {
     const expectedOutput = {
-      '- key1': 'value1',
-      '+ key2': 'value2',
-      '  key3': 'value3',
+      '  host': 'hexlet.io',
+      '- timeout': 50,
+      '+ timeout': 20,
+      '- proxy': '123.234.53.22',
+      '- follow': false,
+      '+ verbose': true,
     };
-
-    expect(gendiff(path1, path2)).toEqual(expectedOutput);
+    const fakeArgv = [
+      'C:\\Program Files\\nodejs\\node.exe',
+      'D:\\Locker\\Projects\\frontend-project-46\\gendiff',
+      '__tests__/fixtures/file1.json',
+      '__tests__/fixtures/file2.json'
+    ];
+    expect(gendiff(fakeArgv.slice(2))).toEqual(expectedOutput);
   });
 
-  it('should return an empty object if the JSON files are identical', () => {
-    const path1 = './file1.json';
-    const path2 = './file1.json';
-
-    const expectedOutput = {};
-
-    expect(gendiff(path1, path2)).toEqual(expectedOutput);
+  it('should return an empty object for two identical JSON files', () => {
+    const fakeArgv = [
+      'C:\\Program Files\\nodejs\\node.exe',
+      'D:\\Locker\\Projects\\frontend-project-46\\gendiff',
+      '__tests__/fixtures/file1.json',
+      '__tests__/fixtures/file1.json'
+    ];
+    expect(gendiff(fakeArgv.slice(2))).toEqual({});
   });
 });
-

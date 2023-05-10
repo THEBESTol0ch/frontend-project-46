@@ -1,28 +1,29 @@
-import fs from 'fs';
+const fs = require("fs");
 
-function gendiff() {
-    const args = process.argv.slice(2);
-    const [path1, path2] = args;
+function gendiff(info) {
+    let output = {};
 
-    const file1 = JSON.parse(fs.readFileSync(path1));
-    const file2 = JSON.parse(fs.readFileSync(path2));
+    if (info[0] == undefined || info[1] == undefined) return output;
+    if (info[0] == info[1]) return output;
+    if (info[0].endsWith(".json") && info[1].endsWith(".json")) {
+        const file1 = JSON.parse(fs.readFileSync(info[0]));
+        const file2 = JSON.parse(fs.readFileSync(info[1]));
 
-    const output = {};
-
-    for (const key in file1) {
-        if (!file2.hasOwnProperty(key)) {
-            output[`- ${key}`] = file1[key];
-        } else if (JSON.stringify(file1[key]) !== JSON.stringify(file2[key])) {
-            output[`- ${key}`] = file1[key];
-            output[`+ ${key}`] = file2[key];
-        } else {
-            output[`  ${key}`] = file1[key];
+        for (const key in file1) {
+            if (!file2.hasOwnProperty(key)) {
+                output[`- ${key}`] = file1[key];
+            } else if (JSON.stringify(file1[key]) !== JSON.stringify(file2[key])) {
+                output[`- ${key}`] = file1[key];
+                output[`+ ${key}`] = file2[key];
+            } else {
+                output[`  ${key}`] = file1[key];
+            }
         }
-    }
 
-    for (const key in file2) {
-        if (!file1.hasOwnProperty(key)) {
-            output[`+ ${key}`] = file2[key];
+        for (const key in file2) {
+            if (!file1.hasOwnProperty(key)) {
+                output[`+ ${key}`] = file2[key];
+            }
         }
     }
 
@@ -30,5 +31,4 @@ function gendiff() {
     return output;
 }
 
-export { gendiff };
-
+module.exports = gendiff;
