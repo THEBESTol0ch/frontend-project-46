@@ -23,6 +23,7 @@
   },
   "scripts": {
     "test": "jest",
+    "coverage": "jest --collect-coverage",
     "lint": "npx eslint ."
   }
 }

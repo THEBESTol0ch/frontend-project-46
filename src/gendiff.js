@@ -27,7 +27,6 @@ function gendiff(info) {
         }
     }
 
-    console.log(output);
     return output;
 }
 
