@@ -1,14 +1,14 @@
-const fs = require("fs");
+const doParse = require("../parsers/parser1.js");
 
 function gendiff(info) {
     let output = {};
 
     if (info[0] == undefined || info[1] == undefined) return output;
     if (info[0] == info[1]) return output;
-    if (info[0].endsWith(".json") && info[1].endsWith(".json")) {
-        const file1 = JSON.parse(fs.readFileSync(info[0]));
-        const file2 = JSON.parse(fs.readFileSync(info[1]));
+    const file1 = doParse(info[0]);
+    const file2 = doParse(info[1]);
 
+    if (file1 !== undefined && file2 !== undefined) {
         for (const key in file1) {
             if (!file2.hasOwnProperty(key)) {
                 output[`- ${key}`] = file1[key];
@@ -25,6 +25,8 @@ function gendiff(info) {
                 output[`+ ${key}`] = file2[key];
             }
         }
+
+        console.log(output);
     }
 
     return output;
