@@ -1,13 +1,13 @@
 const fs = require("fs");
 const yaml = require("js-yaml");
 
-function doParse(file) {
-    if (file.endsWith(".json")) {
-        const newfile = JSON.parse(fs.readFileSync(file));
+function doParse(filePath) {
+    if (filePath.endsWith(".json")) {
+        const newfile = JSON.parse(fs.readFileSync(filePath));
         return newfile;
     }
-    if (file.endsWith(".yml") || file.endsWith(".yaml")) {
-        const newfile = yaml.load(fs.readFileSync(file));
+    if (filePath.endsWith(".yml") || filePath.endsWith(".yaml")) {
+        const newfile = yaml.load(fs.readFileSync(filePath));
         return newfile;
     }
 

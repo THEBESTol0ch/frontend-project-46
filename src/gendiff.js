@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const doParse = require("../parsers/parser1.js");
 const { setFormat, formatFiles } = require("../formatters/index.js");
 
@@ -20,8 +22,15 @@ function gendiff(info) {
         output = formatFiles(file1, file2, format);
     }
 
-    console.dir(output, { depth: 15 });
-    return output;
+    //console.dir(output, { depth: 15 });
+    if (format == "json") {
+        const resultJSON = JSON.stringify(output);
+        const outputPath = path.join(__dirname, "../formatters/output.json");
+        fs.writeFile(outputPath, resultJSON, (err) => {});
+    } else {
+        return output;
+    }
+
 }
 
 module.exports = { gendiff, isObject };

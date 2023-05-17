@@ -1,4 +1,6 @@
 const { gendiff } = require("../src/gendiff.js");
+const fs = require("fs");
+const path = require('path');
 
 const expectedOutput1 = {
   '- follow': false,
@@ -111,5 +113,16 @@ describe('gendiff', () => {
       '__tests__/fixtures/file1.yaml'
     ];
     expect(gendiff(fakeArgv)).toEqual({});
+  });
+
+  it('should return expectedOutput1 with correct json format', () => {
+    const fakeArgv = [
+      '--format',
+      'json',
+      '__tests__/fixtures/file1.json',
+      '__tests__/fixtures/file2.json'
+    ];
+
+    expect(gendiff(fakeArgv)).toEqual(undefined);
   });
 });

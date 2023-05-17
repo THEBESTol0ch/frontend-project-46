@@ -18,7 +18,6 @@ function compareObjects(obj1, obj2) {
         } else if (isObject(value1) && isObject(value2)) {
             const nestedOutput = compareObjects(value1, value2);
             if (Object.keys(nestedOutput).length > 0) {
-                console.log("Triggered")
                 output[`  ${key}`] = nestedOutput;
             }
         } else if (JSON.stringify(value1) !== JSON.stringify(value2)) {
