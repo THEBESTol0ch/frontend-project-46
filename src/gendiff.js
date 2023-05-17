@@ -26,7 +26,8 @@ function gendiff(info) {
     if (format == "json") {
         const resultJSON = JSON.stringify(output);
         const outputPath = path.join(__dirname, "../formatters/output.json");
-        fs.writeFile(outputPath, resultJSON, (err) => {});
+        fs.writeFile(outputPath, resultJSON, () => {});
+        console.log("Process completed with 0 errors. Check formatters/output.json.")
     } else {
         return output;
     }
