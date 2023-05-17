@@ -1,12 +1,12 @@
-const gendiff = require("../src/gendiff.js");
+const { gendiff } = require("../src/gendiff.js");
 
 const expectedOutput1 = {
+  '- follow': false,
   '  host': 'hexlet.io',
+  '- proxy': '123.234.53.22',
   '- timeout': 50,
   '+ timeout': 20,
-  '- proxy': '123.234.53.22',
-  '- follow': false,
-  '+ verbose': true,
+  '+ verbose': true
 };
 
 const expectedOutput2 = {
@@ -35,73 +35,81 @@ const expectedOutput2 = {
   '+ group3': { deep: { id: { number: 45 } }, fee: 100500 }
 };
 
+const expectedOutput3 = {
+  '-': { foo: { bar: { baz: 42, qux: 'hello' } }, spam: 'eggs' },
+  '+': [
+    { foo: { bar: { baz: 42, qux: 'world' } }, spam: 'eggs' }
+  ]
+};
+
 describe('gendiff', () => {
-  it('should output correct difference between two JSON files', () => {
+  it('should return expectedOutput1 with correct stylish format', () => {
     const fakeArgv = [
-      'C:\\CCARF',
-      '',
+      '--format',
+      'stylish',
       '__tests__/fixtures/file1.json',
       '__tests__/fixtures/file2.json'
     ];
-    expect(gendiff(fakeArgv.slice(2))).toEqual(expectedOutput1);
+    expect(gendiff(fakeArgv)).toEqual(expectedOutput1);
   });
 
-  it('should output correct difference between two yaml files', () => {
+  it('should return expectedOutput1 with incorrect stylish format', () => {
     const fakeArgv = [
-      'C:\\Program Files\\nodejs\\node.exe',
-      'D:\\Locker\\Projects\\frontend-project-46\\gendiff',
-      '__tests__/fixtures/file1.yaml',
-      '__tests__/fixtures/file2.yml'
-    ];
-    expect(gendiff(fakeArgv.slice(2))).toEqual(expectedOutput1);
-  });
-
-  it('should output correct difference between two cross format files', () => {
-    const fakeArgv = [
-      '',
-      'Some Text',
-      '__tests__/fixtures/file1.yaml',
+      '--format',
+      'stylish123',
+      '__tests__/fixtures/file1.json',
       '__tests__/fixtures/file2.json'
     ];
-    expect(gendiff(fakeArgv.slice(2))).toEqual(expectedOutput1);
+    expect(gendiff(fakeArgv)).toEqual(expectedOutput1);
   });
 
-  it('should return an empty object for one JSON file', () => {
+  it('should return expectedOutput2 with correct stylish format', () => {
     const fakeArgv = [
-      'C:\\Programs',
-      'D:\\Locker\\Projects',
-      '__tests__/fixtures/file1.json'
+      '--format',
+      'stylish',
+      '__tests__/fixtures/file3.json',
+      '__tests__/fixtures/file4.json'
     ];
-    expect(gendiff(fakeArgv.slice(2))).toEqual({});
+    expect(gendiff(fakeArgv)).toEqual(expectedOutput2);
   });
 
-  it('should return an empty object for one incorrect file format', () => {
+  it('should return expectedOutput3 with correct stylish format', () => {
     const fakeArgv = [
-      'C:\\Program Files\\nodejs\\node.exe',
-      'D:\\Locker\\Projects\\frontend-project-46\\gendiff',
-      '__tests__/fixtures/file1.json',
+      '--format',
+      'stylish',
+      '__tests__/fixtures/file5.json',
+      '__tests__/fixtures/file6.json'
+    ];
+    expect(gendiff(fakeArgv)).toEqual(expectedOutput3);
+  });
+
+  it('should return {} with correct stylish format', () => {
+    const fakeArgv = [
+      '--format',
+      'stylish',
+      '__tests__/fixtures/file1.yaml',
       '__tests__/fixtures/file2.txt'
     ];
-    expect(gendiff(fakeArgv.slice(2))).toEqual({});
+    expect(gendiff(fakeArgv)).toEqual({});
   });
 
-  it('should return an empty object for two identical JSON files', () => {
+  it('should return {} with undefined path', () => {
     const fakeArgv = [
-      'B:\\Dev\\nodejs\\node.exe',
-      'D:\\Locker\\Projects\\some\\path',
-      '__tests__/fixtures/file1.json',
-      '__tests__/fixtures/file1.json'
+      '--format',
+      'stylish',
+      '',
+      '__tests__/fixtures/file2.txt'
     ];
-    expect(gendiff(fakeArgv.slice(2))).toEqual({});
+    expect(gendiff(fakeArgv)).toEqual({});
   });
 
-  it('should output correct difference between two large json files', () => {
+  it('should return {} with equal paths', () => {
     const fakeArgv = [
-      'B:\\Roblox\\nodejs\\node.exe',
-      'D:\\Chmod\\bruh\\some\\path',
-      '__tests__/fixtures/large-file1.json',
-      '__tests__/fixtures/large-file2.json'
+      '--format',
+      'stylish',
+      '__tests__/fixtures/file1.yaml',
+      '__tests__/fixtures/file1.yaml'
     ];
-    expect(gendiff(fakeArgv.slice(2))).toEqual(expectedOutput2);
+    expect(gendiff(fakeArgv)).toEqual({});
   });
 });
