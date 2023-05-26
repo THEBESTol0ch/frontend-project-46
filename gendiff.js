@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const { program } = require("commander");
-const { gendiff } = require("../src/gendiff.js");
+const { gendiff } = require("./src/gendiff.js");
 
 program
 	.usage('[options] <filepath1> <filepath2>')
