@@ -1,4 +1,4 @@
-const { gendiff } = require("../src/gendiff.js");
+const { gendiff } = require("../src/index.js");
 
 const expectedOutput1 = {
   '- follow': false,
