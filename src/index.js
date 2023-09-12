@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const doParse = require("../bin/parser1.js");
+const doParse = require("./parser1.js");
 const { setFormat, formatFiles } = require("../formatters/index.js");
 
 function isObject(value) {
@@ -26,9 +26,7 @@ function gendiff(info) {
         const resultJSON = JSON.stringify(output);
         const outputPath = path.join(__dirname, "../formatters/output.json");
         fs.writeFile(outputPath, resultJSON, () => {});
-        console.log("Process completed with 0 errors. Check formatters/output.json.")
     } else {
-        console.dir(output, { depth: 15 });
         return output;
     }
 
