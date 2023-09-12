@@ -1,0 +1,9 @@
+{
+  "foo": {
+    "bar": {
+      "baz": 42,
+      "qux": "hello"
+    }
+  },
+  "spam": "eggs"
+}

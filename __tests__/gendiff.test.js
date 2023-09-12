@@ -47,8 +47,8 @@ describe('gendiff', () => {
     const fakeArgv = [
       '--format',
       'stylish',
-      '__tests__/fixtures/file1.json',
-      '__tests__/fixtures/file2.json'
+      '__fixtures__/file1.json',
+      '__fixtures__/file2.json'
     ];
     expect(gendiff(fakeArgv)).toEqual(expectedOutput1);
   });
@@ -57,8 +57,8 @@ describe('gendiff', () => {
     const fakeArgv = [
       '--format',
       'stylish123',
-      '__tests__/fixtures/file1.json',
-      '__tests__/fixtures/file2.json'
+      '__fixtures__/file1.json',
+      '__fixtures__/file2.json'
     ];
     expect(gendiff(fakeArgv)).toEqual(expectedOutput1);
   });
@@ -67,8 +67,8 @@ describe('gendiff', () => {
     const fakeArgv = [
       '--format',
       'stylish',
-      '__tests__/fixtures/file3.json',
-      '__tests__/fixtures/file4.json'
+      '__fixtures__/file3.json',
+      '__fixtures__/file4.json'
     ];
     expect(gendiff(fakeArgv)).toEqual(expectedOutput2);
   });
@@ -77,8 +77,8 @@ describe('gendiff', () => {
     const fakeArgv = [
       '--format',
       'stylish',
-      '__tests__/fixtures/file5.json',
-      '__tests__/fixtures/file6.json'
+      '__fixtures__/file5.json',
+      '__fixtures__/file6.json'
     ];
     expect(gendiff(fakeArgv)).toEqual(expectedOutput3);
   });
@@ -87,8 +87,8 @@ describe('gendiff', () => {
     const fakeArgv = [
       '--format',
       'stylish',
-      '__tests__/fixtures/file1.yaml',
-      '__tests__/fixtures/file2.txt'
+      '__fixtures__/file1.yaml',
+      '__fixtures__/file2.txt'
     ];
     expect(gendiff(fakeArgv)).toEqual({});
   });
@@ -98,7 +98,7 @@ describe('gendiff', () => {
       '--format',
       'stylish',
       '',
-      '__tests__/fixtures/file2.txt'
+      '__fixtures__/file2.txt'
     ];
     expect(gendiff(fakeArgv)).toEqual({});
   });
@@ -107,8 +107,8 @@ describe('gendiff', () => {
     const fakeArgv = [
       '--format',
       'stylish',
-      '__tests__/fixtures/file1.yaml',
-      '__tests__/fixtures/file1.yaml'
+      '__fixtures__/file1.yaml',
+      '__fixtures__/file1.yaml'
     ];
     expect(gendiff(fakeArgv)).toEqual({});
   });
@@ -117,8 +117,8 @@ describe('gendiff', () => {
     const fakeArgv = [
       '--format',
       'json',
-      '__tests__/fixtures/file1.json',
-      '__tests__/fixtures/file2.json'
+      '__fixtures__/file1.json',
+      '__fixtures__/file2.json'
     ];
 
     expect(gendiff(fakeArgv)).toEqual(undefined);

@@ -1,5 +1,14 @@
-lint:
-	npx eslint .
+test:
+ npm test
 
 test-coverage:
-	npm test -- --coverage --coverageProvider=v8
+ npx jest --coverage
+
+lint:
+ npx eslint .
+
+lint-fix:
+ npx eslint . --fix
+
+install:
+ npm ci
