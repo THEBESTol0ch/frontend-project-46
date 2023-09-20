@@ -4,7 +4,7 @@ const doParse = require("../src/parser.js");
 const stylishDiff = require("../src/formatters/stylish.js");
 const plainDiff = require("../src/formatters/plain.js");
 
-function gendiff(filePath1, filePath2, format) {
+function gendiff(filePath1, filePath2, format = "stylish") {
     const file1 = doParse(filePath1);
     const file2 = doParse(filePath2);
     let result;
@@ -21,8 +21,6 @@ function gendiff(filePath1, filePath2, format) {
     fs.writeFile(outputPath, resultJSON, (err) => {
         if (err) {
             console.error('Error writing to output.json:', err);
-        } else {
-            console.log('Data has been written to output.json');
         }
     });
 

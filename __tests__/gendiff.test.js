@@ -1,126 +1,27 @@
 const { gendiff } = require("../src/index.js");
-
-const expectedOutput1 = {
-  '- follow': false,
-  '  host': 'hexlet.io',
-  '- proxy': '123.234.53.22',
-  '- timeout': 50,
-  '+ timeout': 20,
-  '+ verbose': true
-};
-
-const expectedOutput2 = {
-  '  common': {
-    '+ follow': false,
-    '  setting1': 'Value 1',
-    '- setting2': 200,
-    '- setting3': true,
-    '+ setting3': null,
-    '+ setting4': 'blah blah',
-    '+ setting5': { key5: 'value5' },
-    '  setting6': {
-      '  doge': { '- wow': '', '+ wow': 'so much' },
-      '  key': 'value',
-      '+ ops': 'vops'
-    }
-  },
-  '  group1': {
-    '- baz': 'bas',
-    '+ baz': 'bars',
-    '  foo': 'bar',
-    '- nest': { key: 'value' },
-    '+ nest': 'str'
-  },
-  '- group2': { abc: 12345, deep: { id: 45 } },
-  '+ group3': { deep: { id: { number: 45 } }, fee: 100500 }
-};
-
-const expectedOutput3 = {
-  '-': { foo: { bar: { baz: 42, qux: 'hello' } }, spam: 'eggs' },
-  '+': [
-    { foo: { bar: { baz: 42, qux: 'world' } }, spam: 'eggs' }
-  ]
-};
+const resultStylish = require("../__fixtures__/resultStylish.js");
+const resultPlain = require("../__fixtures__/resultPlain.js");
 
 describe('gendiff', () => {
-  it('should return expectedOutput1 with correct stylish format', () => {
-    const fakeArgv = [
-      '--format',
-      'stylish',
-      '__fixtures__/file1.json',
-      '__fixtures__/file2.json'
-    ];
-    expect(gendiff(fakeArgv)).toEqual(expectedOutput1);
+  test("json", () => {
+    expect(gendiff("__fixtures__/file1.json", "__fixtures__/file2.json")).toStrictEqual(resultStylish);
   });
-
-  it('should return expectedOutput1 with incorrect stylish format', () => {
-    const fakeArgv = [
-      '--format',
-      'stylish123',
-      '__fixtures__/file1.json',
-      '__fixtures__/file2.json'
-    ];
-    expect(gendiff(fakeArgv)).toEqual(expectedOutput1);
+  test("yaml", () => {
+    expect(gendiff("__fixtures__/file1.yaml", "__fixtures__/file2.yaml")).toStrictEqual(resultStylish);
   });
-
-  it('should return expectedOutput2 with correct stylish format', () => {
-    const fakeArgv = [
-      '--format',
-      'stylish',
-      '__fixtures__/file3.json',
-      '__fixtures__/file4.json'
-    ];
-    expect(gendiff(fakeArgv)).toEqual(expectedOutput2);
+  test("yml", () => {
+    expect(gendiff("__fixtures__/file1.yml", "__fixtures__/file2.yml")).toStrictEqual(resultStylish);
   });
+});
 
-  it('should return expectedOutput3 with correct stylish format', () => {
-    const fakeArgv = [
-      '--format',
-      'stylish',
-      '__fixtures__/file5.json',
-      '__fixtures__/file6.json'
-    ];
-    expect(gendiff(fakeArgv)).toEqual(expectedOutput3);
+describe('plain', () => {
+  test("json", () => {
+    expect(gendiff("__fixtures__/file1.json", "__fixtures__/file2.json", "plain")).toStrictEqual(resultPlain);
   });
-
-  it('should return {} with correct stylish format', () => {
-    const fakeArgv = [
-      '--format',
-      'stylish',
-      '__fixtures__/file1.yaml',
-      '__fixtures__/file2.txt'
-    ];
-    expect(gendiff(fakeArgv)).toEqual({});
+  test("yaml", () => {
+    expect(gendiff("__fixtures__/file1.yaml", "__fixtures__/file2.yaml", "plain")).toStrictEqual(resultPlain);
   });
-
-  it('should return {} with undefined path', () => {
-    const fakeArgv = [
-      '--format',
-      'stylish',
-      '',
-      '__fixtures__/file2.txt'
-    ];
-    expect(gendiff(fakeArgv)).toEqual({});
-  });
-
-  it('should return {} with equal paths', () => {
-    const fakeArgv = [
-      '--format',
-      'stylish',
-      '__fixtures__/file1.yaml',
-      '__fixtures__/file1.yaml'
-    ];
-    expect(gendiff(fakeArgv)).toEqual({});
-  });
-
-  it('should return expectedOutput1 with correct json format', () => {
-    const fakeArgv = [
-      '--format',
-      'json',
-      '__fixtures__/file1.json',
-      '__fixtures__/file2.json'
-    ];
-
-    expect(gendiff(fakeArgv)).toEqual(undefined);
+  test("yml", () => {
+    expect(gendiff("__fixtures__/file1.yml", "__fixtures__/file2.yml", "plain")).toStrictEqual(resultPlain);
   });
 });
