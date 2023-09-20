@@ -1,35 +1,32 @@
-const fs = require('fs');
+const fs = require("fs");
 const path = require('path');
-const doParse = require("./parser1.js");
-const { setFormat, formatFiles } = require("../formatters/index.js");
+const doParse = require("../src/parser.js");
+const stylishDiff = require("../src/formatters/stylish.js");
+const plainDiff = require("../src/formatters/plain.js");
 
-function isObject(value) {
-    return value !== null && typeof value === 'object' && !Array.isArray(value);
-}
-
-function gendiff(info) {
-    let format = setFormat(info);
-    let filePath1 = info[info.length - 2];
-    let filePath2 = info[info.length - 1];
-    let output = {};
-    if (filePath1 == undefined || filePath2 == undefined) return output;
-    if (filePath1 == filePath2) return output;
-
+function gendiff(filePath1, filePath2, format) {
     const file1 = doParse(filePath1);
     const file2 = doParse(filePath2);
+    let result;
 
-    if (file1 !== undefined && file2 !== undefined) {
-        output = formatFiles(file1, file2, format);
+    if (format == "stylish") {
+        result = stylishDiff(file1, file2);
     }
-
-    if (format == "json") {
-        const resultJSON = JSON.stringify(output);
-        const outputPath = path.join(__dirname, "../formatters/output.json");
-        fs.writeFile(outputPath, resultJSON, () => {});
-    } else {
-        return output;
+    if (format == "plain") {
+        result = plainDiff(file1, file2); 
     }
+    
+    const resultJSON = JSON.stringify(result);
+    const outputPath = path.join(__dirname, "formatters/output.json");
+    fs.writeFile(outputPath, resultJSON, (err) => {
+        if (err) {
+            console.error('Error writing to output.json:', err);
+        } else {
+            console.log('Data has been written to output.json');
+        }
+    });
 
+    return result;
 }
 
-module.exports = { gendiff, isObject };
+module.exports = { gendiff };

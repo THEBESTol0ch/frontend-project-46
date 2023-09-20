@@ -1,4 +1,6 @@
-const { isObject } = require("../src/gendiff.js");
+function isObject(value) {
+    return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
 
 function compareObjects(obj1, obj2, path = '') {
     const output = [];
@@ -28,7 +30,7 @@ function compareObjects(obj1, obj2, path = '') {
     return output;
 }
 
-function compareFiles(file1, file2) {
+function plainDiff(file1, file2) {
     if (isObject(file1) && isObject(file2)) {
         return compareObjects(file1, file2);
     } else {
@@ -46,4 +48,4 @@ function formatValue(value) {
     }
 }
 
-module.exports = compareFiles;
+module.exports = plainDiff;
