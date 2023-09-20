@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
-const { program } = require("commander");
+const { Command } = require("commander");
 const { gendiff } = require("../src/index.js");
+
+const program = new Command();
 
 program
 	.version("0.1.0")
