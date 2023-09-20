@@ -2,23 +2,20 @@ function isObject(value) {
     return value !== null && typeof value === 'object' && !Array.isArray(value);
 }
 
-function compareObjects(obj1, obj2) {
+function compareO(o1, o2) {
   const output = {};
-
-  const keys1 = Object.keys(obj1);
-  const keys2 = Object.keys(obj2);
-  const allKeys = Array.from(new Set([...keys1, ...keys2])).sort();
+  const allKeys = Array.from(new Set([...Object.keys(o1), ...Object.keys(o2)])).sort();
 
   for (const key of allKeys) {
-      const value1 = obj1[key];
-      const value2 = obj2[key];
+      const value1 = o1[key];
+      const value2 = o2[key];
 
-      if (!obj2.hasOwnProperty(key)) {
+      if (!o2.hasOwnProperty(key)) {
           output[`- ${key}`] = value1;
-      } else if (!obj1.hasOwnProperty(key)) {
+      } else if (!o1.hasOwnProperty(key)) {
           output[`+ ${key}`] = value2;
       } else if (isObject(value1) && isObject(value2)) {
-          const nestedOutput = compareObjects(value1, value2);
+          const nestedOutput = compareO(value1, value2);
           if (Object.keys(nestedOutput).length > 0) {
               output[`  ${key}`] = nestedOutput;
           }
@@ -35,7 +32,7 @@ function compareObjects(obj1, obj2) {
 
 function stylishDiff(file1, file2) {
   if (isObject(file1) && isObject(file2)) {
-      return compareObjects(file1, file2);
+      return compareO(file1, file2);
   } else {
       return {
           '-': file1,
