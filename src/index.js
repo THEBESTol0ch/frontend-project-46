@@ -4,7 +4,7 @@ const doParse = require("../src/parser.js");
 const stylishDiff = require("../src/formatters/stylish.js");
 const plainDiff = require("../src/formatters/plain.js");
 
-function gendiff(filePath1, filePath2, format = "stylish") {
+const gendiff = (filePath1, filePath2, format = "stylish") => {
     const file1 = doParse(filePath1);
     const file2 = doParse(filePath2);
     let result;
