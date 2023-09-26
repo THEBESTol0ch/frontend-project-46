@@ -1,8 +1,8 @@
-const fs = require("fs");
-const path = require('path');
-const doParse = require("../src/parser.js");
-const stylishDiff = require("../src/formatters/stylish.js");
-const plainDiff = require("../src/formatters/plain.js");
+import fs from 'fs';
+import path from 'path';
+import doParse from './parser.js';
+import stylishDiff from './formatters/stylish.js';
+import plainDiff from './formatters/plain.js';
 
 const gendiff = (filePath1, filePath2, format = "stylish") => {
     const file1 = doParse(filePath1);
@@ -27,4 +27,4 @@ const gendiff = (filePath1, filePath2, format = "stylish") => {
     return result;
 }
 
-module.exports = { gendiff };
+export default gendiff;

@@ -44,4 +44,4 @@ function stylishDiff(file1, file2) {
   }
 }
   
-module.exports = stylishDiff;
+export default stylishDiff;

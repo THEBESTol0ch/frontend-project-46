@@ -1,6 +1,6 @@
-const { gendiff } = require("../src/index.js");
-const resultStylish = require("../__fixtures__/resultStylish.js");
-const resultPlain = require("../__fixtures__/resultPlain.js");
+import gendiff from "../src/index.js";
+import resultStylish from "../__fixtures__/resultStylish.js";
+import resultPlain from "../__fixtures__/resultPlain.js";
 
 describe('gendiff', () => {
   test("json", () => {

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const { Command } = require("commander");
-const { gendiff } = require("../src/index.js");
+import { Command } from "commander";
+import gendiff from "../src/index.js";
 
 const program = new Command();
 

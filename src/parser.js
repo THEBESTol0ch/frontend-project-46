@@ -1,5 +1,5 @@
-const fs = require("fs");
-const yaml = require("js-yaml");
+import fs from 'fs';
+import yaml from "js-yaml";
 
 function doParse(filePath) {
     if (filePath.endsWith(".json")) {
@@ -14,4 +14,4 @@ function doParse(filePath) {
     return undefined;
 }
 
-module.exports = doParse;
+export default doParse;

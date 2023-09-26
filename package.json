@@ -6,6 +6,7 @@
   "bin": {
     "gendiff": "bin/gendiff.js"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/THEBESTol0ch/frontend-project-46.git"

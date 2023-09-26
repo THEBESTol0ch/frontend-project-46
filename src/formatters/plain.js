@@ -48,4 +48,4 @@ function formatValue(value) {
     }
 }
 
-module.exports = plainDiff;
+export default plainDiff;
