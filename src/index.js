@@ -17,7 +17,7 @@ const gendiff = (filePath1, filePath2, format = "stylish") => {
     }
     
     const resultJSON = JSON.stringify(result);
-    const outputPath = "src/formatters/output.json";
+    const outputPath = path.join(process.cwd(),"src/formatters/output.json");
     fs.writeFile(outputPath, resultJSON, (err) => {
         if (err) {
             console.error('Error writing to output.json:', err);
