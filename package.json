@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A second project that compares the files.",
   "main": "src/index.js",
+  "bin": {
+    "gendiff": "bin/gendiff.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/THEBESTol0ch/frontend-project-46.git"
