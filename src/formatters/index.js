@@ -10,6 +10,6 @@ export default function formatter(tree, format) {
     case 'json':
       return JSON.stringify(tree);
     default:
-      return "Uncorrect format"
+      return 'Uncorrect format';
   }
 }
