@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "A second project that compares the files.",
   "main": "src/index.js",
-  "bin": {
-    "gendiff": "bin/gendiff.js"
-  },
   "type": "module",
+  "scripts": {
+    "test": "npx jest",
+    "coverage": "jest --collect-coverage",
+    "lint": "npx eslint ."
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/THEBESTol0ch/frontend-project-46.git"
@@ -20,17 +22,13 @@
   "dependencies": {
     "commander": "^10.0.0",
     "fs": "^0.0.1-security",
-    "js-yaml": "^4.1.0"
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "eslint": "^8.49.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.28.1",
     "jest": "^29.5.0"
-  },
-  "scripts": {
-    "test": "npx jest",
-    "coverage": "jest --collect-coverage",
-    "lint": "npx eslint ."
   }
 }

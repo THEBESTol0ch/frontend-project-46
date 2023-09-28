@@ -1,47 +1,55 @@
-function isObject(value) {
-    return value !== null && typeof value === 'object' && !Array.isArray(value);
-}
+import _ from 'lodash';
 
-function compareObjects(obj1, obj2) {
-  const output = {};
+const indent = ' ';
+const indentSize = 4;
+const currentIndent = (depth) => indent.repeat(indentSize * depth - 2);
+const braceIndent = (depth) => indent.repeat(indentSize * depth - indentSize);
 
-  const keys1 = Object.keys(obj1);
-  const keys2 = Object.keys(obj2);
-  const allKeys = Array.from(new Set([...keys1, ...keys2])).sort();
+const joinStrings = (lines, depth) => [
+  '{',
+  ...lines,
+  `${braceIndent(depth)}}`,
+].join('\n');
 
-  for (const key of allKeys) {
-      const value1 = obj1[key];
-      const value2 = obj2[key];
+const stringify = (data, depth) => {
+  if ((!_.isObject(data)) || (data === null)) {
+    return String(data);
+  }
+  const keys = _.keys(data);
+  const lines = keys.map((key) => `${currentIndent(depth)}  ${key}: ${stringify(data[key], depth + 1)}`);
+  return joinStrings(lines, depth);
+};
 
-      if (!obj2.hasOwnProperty(key)) {
-          output[`- ${key}`] = value1;
-      } else if (!obj1.hasOwnProperty(key)) {
-          output[`+ ${key}`] = value2;
-      } else if (isObject(value1) && isObject(value2)) {
-          const nestedOutput = compareObjects(value1, value2);
-          if (Object.keys(nestedOutput).length > 0) {
-              output[`  ${key}`] = nestedOutput;
-          }
-      } else if (JSON.stringify(value1) !== JSON.stringify(value2)) {
-          output[`- ${key}`] = value1;
-          output[`+ ${key}`] = value2;
-      } else {
-          output[`  ${key}`] = value1;
+const makeStylishDiff = (tree) => {
+  const iter = (node, depth) => {
+    switch (node.type) {
+      case 'root': {
+        const result = node.children.flatMap((child) => iter(child, depth));
+        return joinStrings(result, depth);
       }
-  }
+      case 'nested': {
+        const childrenToString = node.children.flatMap((child) => iter(child, depth + 1));
+        return `${currentIndent(depth)}  ${node.key}: ${joinStrings(childrenToString, depth + 1)}`;
+      }
+      case 'added': {
+        return `${currentIndent(depth)}+ ${node.key}: ${stringify(node.value, depth + 1)}`;
+      }
+      case 'removed': {
+        return `${currentIndent(depth)}- ${node.key}: ${stringify(node.value, depth + 1)}`;
+      }
+      case 'changed': {
+        return [`${currentIndent(depth)}- ${node.key}: ${stringify(node.oldValue, depth + 1)}`,
+          `${currentIndent(depth)}+ ${node.key}: ${stringify(node.newValue, depth + 1)}`];
+      }
+      case 'unchanged': {
+        return `${currentIndent(depth)}  ${node.key}: ${stringify(node.value, depth + 1)}`;
+      }
+      default: {
+        throw Error('Uncorrect data');
+      }
+    }
+  };
+  return iter(tree, 1);
+};
 
-  return output;
-}
-
-function stylishDiff(file1, file2) {
-  if (isObject(file1) && isObject(file2)) {
-      return compareObjects(file1, file2);
-  } else {
-      return {
-          '-': file1,
-          '+': file2
-      };
-  }
-}
-  
-export default stylishDiff;
+export default makeStylishDiff;
