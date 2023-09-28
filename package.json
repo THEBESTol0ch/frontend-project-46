@@ -4,6 +4,9 @@
   "description": "A second project that compares the files.",
   "main": "src/index.js",
   "type": "module",
+  "bin": {
+    "gendiff": "bin/gendiff.js"
+  },
   "scripts": {
     "test": "npx jest",
     "coverage": "jest --collect-coverage",

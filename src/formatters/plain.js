@@ -35,9 +35,6 @@ export function makePlainDiff(tree) {
       case 'unchanged': {
         return null;
       }
-      default: {
-        throw Error('Uncorrect data');
-      }
     }
   });
   return iter(tree.children, []);
